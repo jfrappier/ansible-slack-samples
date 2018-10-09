@@ -1,0 +1,21 @@
+#Date string should be in epoch format.
+#See Slack API documentation for a list of types and other available parameters
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+  - name: get files from slack
+    uri:
+      url: https://slack.com/api/files.list?ts_to=1514808000&ts_from=1483272000&types=pdfs
+      method: GET
+      force_basic_auth: yes
+      headers:
+        Content-type: "application/x-www-form-urlencoded"
+        Authorization: Bearer xoxp-batman-robin-superman-tsoukalos
+      return_content: yes
+    register: pdffilelist
+
+  - name: write job runs to file
+    copy:
+      content: "{{ pdffilelist | to_nice_json }}"
+      dest: "files.txt"
