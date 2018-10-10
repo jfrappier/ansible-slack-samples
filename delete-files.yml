@@ -16,11 +16,12 @@
         Content-type: "application/x-www-form-urlencoded"
         Authorization: Bearer xoxp-xoxp-batman-robin-superman-tsoukalos-yourtoken
       return_content: yes
-    register: pdffilelist
+    register: filelist
 
+#Not really needed, just here to test so I can see what files are being deleted
   - name: write list of files - just for testing/validation
     copy:
-      content: "{{ pdffilelist | to_nice_json }}"
+      content: "{{ filelist | to_nice_json }}"
       dest: "files.txt"
 
   - name: delete files
@@ -31,4 +32,4 @@
       headers:
         Content-type: "application/x-www-form-urlencoded"
         Authorization: Bearer xoxp-xoxp-batman-robin-superman-tsoukalos-yourtoken
-    with_items: "{{ pdffilelist.json.files }}"
+    with_items: "{{ filelist.json.files }}"
