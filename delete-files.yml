@@ -18,7 +18,7 @@
       return_content: yes
     register: pdffilelist
 
-  - name: write job runs to file
+  - name: write list of files - just for testing/validation
     copy:
       content: "{{ pdffilelist | to_nice_json }}"
       dest: "files.txt"
